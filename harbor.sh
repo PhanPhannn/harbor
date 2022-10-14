@@ -49,15 +49,14 @@ systemctl restart docker
 echo "Docker Installation done"
 
 #Install Latest Stable Docker Compose Release
-COMPOSEVERSION=$(curl -s sudo curl -L "https://github.com/docker/compose/releases/download/v2.1.1/)
-curl -L "https://github.com/docker/compose/releases/download/$COMPOSEVERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/v2.1.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 echo "Docker Compose Installation done"
 
 #Install Latest Stable Harbor Release
-HARBORVERSION=$(curl -s https://github.com/goharbor/harbor/releases/latest/download/v2.0.0)
-curl -s https://api.github.com/repos/goharbor/harbor/releases/latest/download/v2.0.0
+HARBORVERSION=$(curl -s https://github.com/goharbor/harbor/releases/latest/download 2>&1 | grep -Po [0-9]+\.[0-9]+\.[0-9]+)
+curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep browser_download_url | grep online | cut -d '"' -f 4 | wget -qi -
 tar xvf harbor-online-installer-v$HARBORVERSION.tgz
 cd harbor
 sed -i "s/reg.mydomain.com/$IPorFQDN/g" harbor.yml
