@@ -57,7 +57,7 @@ echo "Docker Compose Installation done"
 
 #Install Latest Stable Harbor Release
 HARBORVERSION=$(curl -s https://github.com/goharbor/harbor/releases/latest/download/v2.0.0)
-curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep browser_download_url | grep online | cut -d '"' -f 4 | wget -qi -
+curl -s https://api.github.com/repos/goharbor/harbor/releases/latest/download/v2.0.0
 tar xvf harbor-online-installer-v$HARBORVERSION.tgz
 cd harbor
 sed -i "s/reg.mydomain.com/$IPorFQDN/g" harbor.yml
